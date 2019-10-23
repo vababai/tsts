@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol Descriptionable {
     var presentName: String { get }
-    func descriptionProtocol() -> String
+    var descriptionString: String { get }
 }
 
 extension Descriptionable {
@@ -19,15 +20,14 @@ extension Descriptionable {
         return "\(type(of: self))"
     }
     
-    func descriptionProtocol() -> String {
+    var descriptionString: String {
         var result = ""
         let propertyList = Mirror(reflecting: self).children
         for property in propertyList {
             if let label = property.label {
-                result = result + "\(label) \(property.value) \n"
+                result = result + "\(label): \(property.value) \n"
             }
         }
         return result
     }
-    
 }

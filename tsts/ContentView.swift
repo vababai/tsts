@@ -10,32 +10,36 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let arrayOfElements = getAllElements()
+    var arrayOfElements: [Descriptionable] = getAllElements()
     
     var body: some View {
-        List {
-            VStack(alignment: .leading) {
-                
+        NavigationView {
+            List { 
                 ForEach(0..<arrayOfElements.count) { index in
-                    Text(self.arrayOfElements[index].presentName)
-                        .font(.title)
-                        .multilineTextAlignment(.leading)
-                    Text(self.arrayOfElements[index].descriptionProtocol())
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(1)
+                    NavigationLink(destination: Text(self.arrayOfElements[index].descriptionString)) {
+                        VStack(alignment: .leading) {
+                            Text(self.arrayOfElements[index].presentName)
+                                .font(.title)
+                                .multilineTextAlignment(.leading)
+                            Text(self.arrayOfElements[index].descriptionString)
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(1)
+                        }
+                    }
                 }
             }
+            .navigationBarTitle("TSTS TASK")
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(arrayOfElements: getAllElements())
     }
 }
 
-func getAllElements() -> Array<Descriptionable> {
+func getAllElements() -> [Descriptionable] {
     var array: [Descriptionable] = Notice.createElements(numberOfElements: Int.random(in: 3...33))
     array += Event.createElements(numberOfElements: Int.random(in: 3...33))
     array += Move.createElements(numberOfElements: Int.random(in: 3...33))
