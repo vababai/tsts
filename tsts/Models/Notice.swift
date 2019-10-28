@@ -16,7 +16,7 @@ struct Notice: Descriptionable {
     static func createElements(numberOfElements: Int) -> [Notice] {
         var arrayOfElements:[Notice] = []
         for i in 0...numberOfElements {
-            arrayOfElements.append(Notice(flightDate: Date.init(), gate: "\(i)"))
+            arrayOfElements.append(Notice(flightDate: nil, gate: "\(i)"))
         }
         return arrayOfElements
     }

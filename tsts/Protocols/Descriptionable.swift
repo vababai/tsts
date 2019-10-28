@@ -25,9 +25,18 @@ extension Descriptionable {
         let propertyList = Mirror(reflecting: self).children
         for property in propertyList {
             if let label = property.label {
-                result = result + "\(label): \(property.value) \n"
+                result = result + "\(label): \(unwrap(property.value)) \n"
             }
         }
         return result
     }
+}
+
+private func unwrap<T>(_ any: T) -> Any
+{
+    let mirror = Mirror(reflecting: any)
+    guard mirror.displayStyle == .optional, let first = mirror.children.first else {
+        return any
+    }
+    return first.value
 }
